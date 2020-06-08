@@ -4,14 +4,28 @@
   "description": "project manager system server",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "amit shwartz & roni politzanov",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "mongoose": "^5.9.18",
-    "node-dev": "^4.0.0"
-  }
+    "mongoose": "^5.9.18"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RoniPolisanov/easyProject.git"
+  },
+  "bugs": {
+    "url": "https://github.com/RoniPolisanov/easyProject/issues"
+  },
+  "homepage": "https://github.com/RoniPolisanov/easyProject#readme"
 }

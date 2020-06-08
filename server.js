@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const dbConnection = require('./db');
 const PORT = process.env.PORT || 8000;
 const cors = require('cors');
 
@@ -11,7 +10,7 @@ var rawBodySaver = (req, res, buf, encoding) => {
   }
 }
 
-app.set('port', port);
+app.set('port', PORT);
 app.use(cors());
 
 //  refers root to API file
@@ -45,31 +44,27 @@ app.use((req, res, next) => {
   next();
 });
 
-module.exports = () => {
+// Connect to mongoDB
 
-  // Connect to mongoDB
-  dbConnection();
+app.all('/*', (req, res) => {
+  res.status(404).send({ "Message": `This page was not found` });
 
-  app.all('/*', (req, res) => {
-    res.status(404).send({ "Message": `This page was not found` });
+  // respond with html page
+  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
 
-    // respond with html page
-    if (req.accepts('html')) {
-      res.render('404', { url: req.url });
-      return;
-    }
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
 
-    // respond with json
-    if (req.accepts('json')) {
-      res.send({ error: 'Not found' });
-      return;
-    }
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
+});
 
-    // default to plain-text. send()
-    res.type('txt').send('Not found');
-  });
-
-  app.listen(PORT, () => {
-    console.log(`App is listening on port ${PORT}`)
-  })
-}
+app.listen(PORT, () => {
+  console.log(`App is listening on port ${PORT}`)
+})

@@ -1,4 +1,7 @@
 require('dotenv').config();
 
-const startService = require('./server')
-startService()
+// Connect to mongoDB
+const dbConnection = require('./db');
+
+dbConnection().then( () => require('./server') );
+
