@@ -52,9 +52,7 @@ const UserSchema = new Schema({
     trim: true,
     minlength: 8
   },
-  tokens: [{
     token: { type: String, required: true }
-  }]
 }, { collection: 'users' })
 
 UserSchema.index({ email: 1 }, { unique: true })
@@ -84,7 +82,7 @@ UserSchema.methods.generateAuthToken = async function () {
   const user = this;
   const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET);
 
-  user.tokens = user.tokens.concat({ token });
+  user.token = token;
   await user.save();
 
   return token;
@@ -95,7 +93,7 @@ UserSchema.methods.toJSON = function () {
   const userObject = user.toObject();
 
   delete userObject.password;
-  delete userObject.tokens;
+  delete userObject.token;
 
   return userObject;
 }
