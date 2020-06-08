@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Connect to mongoDB
+require('./routes/routes');
 
 app.all('/*', (req, res) => {
   res.status(404).send({ "Message": `This page was not found` });
