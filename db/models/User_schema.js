@@ -24,14 +24,14 @@ const UserSchema = new Schema({
         throw new Error('Last name is invalid')
     }
   },
-  date_of_birth: {
-    type: Date,
-    required: true,
-    validate(value) {
-      if (!moment(value).isValid())
-        throw new Error('Last name is invalid')
-    }
-  },
+  // date_of_birth: {
+  //   type: Date,
+  //   required: true,
+  //   validate(value) {
+  //     if (!moment(value).isValid())
+  //       throw new Error('Last name is invalid')
+  //   }
+  // },
   avatar: {
     type: String,
     default: "https://www.academicapproach.com/wp-content/uploads/2019/09/iu.png"

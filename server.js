@@ -1,8 +1,9 @@
 const express = require('express');
-const app = express();
+const app = require('./routes/routes');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 8000;
 const cors = require('cors');
+const userRouter = require('./routes/controllers/user/userRouter')
 
 var rawBodySaver = (req, res, buf, encoding) => {
   if (buf && buf.length) {
@@ -43,8 +44,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
-
-require('./routes/routes');
 
 app.all('/*', (req, res) => {
   res.status(404).send({ "Message": `This page was not found` });

@@ -1,6 +1,6 @@
 const User = require('../../../db/models/User_schema')
 
-exports.signIn = async (req, res) => {
+exports.register = async (req, res) => {
   try {
     const newUser = new User(req.body);
     await newUser.save();

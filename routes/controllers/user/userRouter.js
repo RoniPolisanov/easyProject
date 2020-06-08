@@ -1,14 +1,13 @@
 const router = require('express').Router();
 const {
-  signIn,
+  register,
   login,
   logout,
-  logoutAll,
   editUserDetails,
   deleteUser } = require('./user.ctrl');
-const auth = require('../middleware/auth');
+const auth = require('../../middleware/auth');
 
-router.post('/', signIn); 
+router.post('/', register); 
 router.post('/login', login); 
 router.post('/logout', auth, logout); 
 // router.post('/logoutAll', auth, logoutAll); 
