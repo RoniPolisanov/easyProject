@@ -44,6 +44,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   next();
 });
+
 routes(app);
 app.all('/*', (req, res) => {
   res.status(404).send({ "Message": `This page was not found` });
