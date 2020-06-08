@@ -2,6 +2,7 @@ const validator = require('validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const moment = require('moment');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
@@ -26,6 +27,10 @@ const UserSchema = new Schema({
   date_of_birth: {
     type: Date,
     required: true,
+    validate(value) {
+      if (!moment(value).isValid())
+        throw new Error('Last name is invalid')
+    }
   },
   avatar: {
     type: String,

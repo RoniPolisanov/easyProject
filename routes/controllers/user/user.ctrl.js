@@ -25,7 +25,7 @@ exports.login = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
-    req.user.tokens = req.user.tokens.filter(token => token.token !== req.token);
+    req.user.token = null;
     await req.user.save();
     res.status(200).send();
   } catch (err) {
@@ -33,18 +33,18 @@ exports.logout = async (req, res) => {
   }
 }
 
-exports.logoutAll = async (req, res) => {
-  try {
-    req.user.tokens = [];
-    await req.user.save();
+// exports.logoutAll = async (req, res) => {
+//   try {
+//     req.user.tokens = [];
+//     await req.user.save();
     
-    res.status(200).send();
-  } catch (err) {
-    res.status(500).json({ error: err.message })
-  }
-}
+//     res.status(200).send();
+//   } catch (err) {
+//     res.status(500).json({ error: err.message })
+//   }
+// }
 
-exports.edit = async (req, res) => {
+exports.editUserDetails = async (req, res) => {
   const updates = Object.keys(req.body);
   const allowedUpdates = ['email', 'password', 'avatar'];
   const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
