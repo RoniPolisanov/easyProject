@@ -7,6 +7,7 @@ const {
   editUserDetails,
   deleteUser } = require('./user.ctrl');
 const auth = require('../middleware/auth');
+router.get('/roni', (req, res) => res.status(200).json( "Hello Roni!" )); 
 
 router.post('/', signIn); 
 router.post('/login', login); 
