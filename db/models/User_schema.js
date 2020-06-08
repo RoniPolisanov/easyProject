@@ -52,28 +52,17 @@ const UserSchema = new Schema({
     trim: true,
     minlength: 8
   },
-    token: { type: String, required: true }
+  token: { type: String, default: null }
 }, { collection: 'users' })
 
 UserSchema.index({ email: 1 }, { unique: true })
 
 UserSchema.statics.findByCredentials = async (email, password) => {
-  try{
-    const user = await User.findOne({ email });
-    if (!user) throw Error('Unable to login');
-  }
-  catch(e){
-throw new Error (e.message);
-  }
+  const user = await User.findOne({ email });
+  if (!user) throw Error('Unable to login');
 
-  try{
-     const isMatch = await bcrypt.compare(password, user.password);
+  const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) throw Error('Unable to login');
-  }
-  catch(e){
-    throw new Error (e.message);
-  }
- 
 
   return user;
 }
