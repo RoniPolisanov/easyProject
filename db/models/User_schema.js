@@ -6,7 +6,17 @@ const moment = require('moment');
 const { Schema } = mongoose;
 
 const UserSchema = new Schema({
-  firstname: {
+  _id: {
+    type: String,
+    required: true,
+    minlength: 9,
+    maxlength: 9,
+    validate(value) {
+      if (!validator.isNumeric(value))
+        throw new Error('ID is invalid')
+    }
+  },
+  first_name: {
     type: String,
     required: true,
     trim: true,
@@ -15,7 +25,7 @@ const UserSchema = new Schema({
         throw new Error('First name is invalid')
     }
   },
-  lastname: {
+  last_name: {
     type: String,
     required: true,
     trim: true,
@@ -24,14 +34,31 @@ const UserSchema = new Schema({
         throw new Error('Last name is invalid')
     }
   },
-  // date_of_birth: {
-  //   type: Date,
-  //   required: true,
-  //   validate(value) {
-  //     if (!moment(value).isValid())
-  //       throw new Error('Last name is invalid')
-  //   }
-  // },
+  date_of_birth: {
+    type: Date,
+    required: true,
+    validate(value) {
+      if (!moment(value).isValid())
+        throw new Error('Date of birth is invalid')
+    }
+  },
+  phone: {
+    type: String,
+    required: true,
+    trim: true,
+    validate(value) {
+      if (!validator.isNumeric(value))
+        throw new Error('Phone is invalid')
+    }
+  },
+  address: {
+    country: { type: String, required: true },
+    postcode: { type: Number, required: true },
+    district: { type: String, required: true },
+    city: { type: String, required: true },
+    street: { type: String, required: true },
+    house_num: { type: Number, required: true }
+  },
   avatar: {
     type: String,
     default: "https://www.academicapproach.com/wp-content/uploads/2019/09/iu.png"
@@ -51,6 +78,15 @@ const UserSchema = new Schema({
     required: true,
     trim: true,
     minlength: 8
+  },
+  bank_account: {
+    bank_num: { type: Number, required: true },
+    branch_num: { type: Number, required: true },
+    account_num: { type: Number, required: true }
+  },
+  creation_date: {
+    type: Date,
+    default: new Date()
   },
   token: { type: String, default: null }
 }, { collection: 'users' })
@@ -101,4 +137,4 @@ UserSchema.pre('save', async function (next) {
 })
 
 const User = mongoose.model('User', UserSchema);
-module.exports = User
+module.exports = User;
